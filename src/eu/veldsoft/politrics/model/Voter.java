@@ -19,7 +19,7 @@ class Voter extends Figure {
 		};
 	}
 	
-	Voter(int color) {
-		this.color = color;
+	Voter(Enemies enemy) {
+		this.enemy = enemy;
 	}
 }

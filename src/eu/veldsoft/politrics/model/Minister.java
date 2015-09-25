@@ -19,7 +19,7 @@ class Minister extends Figure {
 		};
 	}
 	
-	Minister(int color) {
-		this.color = color;
+	Minister(Enemies enemy) {
+		this.enemy = enemy;
 	}
 }

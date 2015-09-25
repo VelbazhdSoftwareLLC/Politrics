@@ -15,60 +15,58 @@ public class Board {
 
 	private final boolean aura[][] = new boolean[SIZE][SIZE];
 
-	private final Figure dark[] = new Figure[PIECES];
+	private final Figure pile[][] = new Figure[2][PIECES];
 
-	private final Figure light[] = new Figure[PIECES];
-
-	private final Map<Enemies, Vector<Figure>> lineup = new HashMap<Enemies, Vector<Figure>>();
+	private final Map<Enemies, Vector<Figure>> lineups = new HashMap<Enemies, Vector<Figure>>();
 
 	private State state = State.PLACING;
 	
 	/* Initialize object fields. */{
-		dark[0] = new President(Enemies.DARK.color());
-		dark[1] = new Voter(Enemies.DARK.color());
-		dark[2] = new Voter(Enemies.DARK.color());
-		dark[3] = new Voter(Enemies.DARK.color());
-		dark[4] = new Voter(Enemies.DARK.color());
-		dark[5] = new Minister(Enemies.DARK.color());
-		dark[6] = new Minister(Enemies.DARK.color());
-		dark[7] = new Minister(Enemies.DARK.color());
-		dark[8] = new Minister(Enemies.DARK.color());
-		dark[9] = new Delegate(Enemies.DARK.color());
-		dark[10] = new Delegate(Enemies.DARK.color());
-		dark[11] = new Delegate(Enemies.DARK.color());
-		dark[12] = new Delegate(Enemies.DARK.color());
-		dark[13] = new Servant(Enemies.DARK.color());
-		dark[14] = new Servant(Enemies.DARK.color());
-		dark[15] = new Servant(Enemies.DARK.color());
-		dark[16] = new Servant(Enemies.DARK.color());
+		pile[Enemies.DARK.index()][0] = new President(Enemies.DARK);
+		pile[Enemies.DARK.index()][1] = new Voter(Enemies.DARK);
+		pile[Enemies.DARK.index()][2] = new Voter(Enemies.DARK);
+		pile[Enemies.DARK.index()][3] = new Voter(Enemies.DARK);
+		pile[Enemies.DARK.index()][4] = new Voter(Enemies.DARK);
+		pile[Enemies.DARK.index()][5] = new Minister(Enemies.DARK);
+		pile[Enemies.DARK.index()][6] = new Minister(Enemies.DARK);
+		pile[Enemies.DARK.index()][7] = new Minister(Enemies.DARK);
+		pile[Enemies.DARK.index()][8] = new Minister(Enemies.DARK);
+		pile[Enemies.DARK.index()][9] = new Delegate(Enemies.DARK);
+		pile[Enemies.DARK.index()][10] = new Delegate(Enemies.DARK);
+		pile[Enemies.DARK.index()][11] = new Delegate(Enemies.DARK);
+		pile[Enemies.DARK.index()][12] = new Delegate(Enemies.DARK);
+		pile[Enemies.DARK.index()][13] = new Servant(Enemies.DARK);
+		pile[Enemies.DARK.index()][14] = new Servant(Enemies.DARK);
+		pile[Enemies.DARK.index()][15] = new Servant(Enemies.DARK);
+		pile[Enemies.DARK.index()][16] = new Servant(Enemies.DARK);
 
-		light[0] = new President(Enemies.LIGHT.color());
-		light[1] = new Voter(Enemies.LIGHT.color());
-		light[2] = new Voter(Enemies.LIGHT.color());
-		light[3] = new Voter(Enemies.LIGHT.color());
-		light[4] = new Voter(Enemies.LIGHT.color());
-		light[5] = new Minister(Enemies.LIGHT.color());
-		light[6] = new Minister(Enemies.LIGHT.color());
-		light[7] = new Minister(Enemies.LIGHT.color());
-		light[8] = new Minister(Enemies.LIGHT.color());
-		light[9] = new Delegate(Enemies.LIGHT.color());
-		light[10] = new Delegate(Enemies.LIGHT.color());
-		light[11] = new Delegate(Enemies.LIGHT.color());
-		light[12] = new Delegate(Enemies.LIGHT.color());
-		light[13] = new Servant(Enemies.LIGHT.color());
-		light[14] = new Servant(Enemies.LIGHT.color());
-		light[15] = new Servant(Enemies.LIGHT.color());
-		light[16] = new Servant(Enemies.LIGHT.color());
+		pile[Enemies.LIGHT.index()][0] = new President(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][1] = new Voter(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][2] = new Voter(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][3] = new Voter(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][4] = new Voter(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][5] = new Minister(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][6] = new Minister(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][7] = new Minister(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][8] = new Minister(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][9] = new Delegate(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][10] = new Delegate(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][11] = new Delegate(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][12] = new Delegate(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][13] = new Servant(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][14] = new Servant(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][15] = new Servant(Enemies.LIGHT);
+		pile[Enemies.LIGHT.index()][16] = new Servant(Enemies.LIGHT);
 
-		lineup.put(Enemies.DARK, new Vector<Figure>());
-		for(Figure figure : dark) {
-			lineup.get(Enemies.DARK).add(figure);
+		lineups.put(Enemies.DARK, new Vector<Figure>());
+		for(Figure figure : pile[Enemies.DARK.index()]) {
+			lineups.get(Enemies.DARK).add(figure);
 		}
-		lineup.put(Enemies.LIGHT, new Vector<Figure>());
-		for(Figure figure : light) {
-			lineup.get(Enemies.LIGHT).add(figure);
+		lineups.put(Enemies.LIGHT, new Vector<Figure>());
+		for(Figure figure : pile[Enemies.LIGHT.index()]) {
+			lineups.get(Enemies.LIGHT).add(figure);
 		}
-		
+
 		cells[0][0] = new Cell(0xcc0000, 0, 11);
 		cells[0][1] = new Cell(0xff99ff, 0, 12);
 		cells[0][2] = new Cell(0xcc0000, 0, 13);
@@ -172,18 +170,37 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Cells where the figure can be placed.
+	 */
 	private boolean[][] placement(Figure figure) {
 		boolean places[][] = new boolean[SIZE][SIZE];
 		return places;
 	}
 
+	/**
+	 * Search for win combination according player color.
+	 * 
+	 * @param enemy
+	 * @return
+	 */
 	private boolean fiveInRow(Enemies enemy) {
 		// TODO Search for.
 		return false;
 	}
 
+	/**
+	 * Check for win combination possibility.
+	 * 
+	 * @param enemy
+	 * @return
+	 */
 	private boolean hasMoreThanFour(Enemies enemy) {
 		// TODO Search for.
 		return false;
+	}
+
+	public Map<Enemies, Vector<Figure>> getLineups() {
+		return lineups;
 	}
 }

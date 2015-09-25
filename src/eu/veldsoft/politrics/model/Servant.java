@@ -5,7 +5,7 @@ class Servant extends Figure {
 		mark = 'C';
 	}
 	
-	Servant(int color) {
-		this.color = color;
+	Servant(Enemies color) {
+		this.enemy = enemy;
 	}
 }

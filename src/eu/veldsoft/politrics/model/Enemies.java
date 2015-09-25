@@ -1,15 +1,21 @@
 package eu.veldsoft.politrics.model;
 
-enum Enemies {
-	DARK(0x6633cc), LIGHT(0xff6600);
+public enum Enemies {
+	DARK(0, 0x6633cc), LIGHT(1, 0xff6600);
+	
+	private int index;
 	
 	private int color;
 	
-	private Enemies(int color) {
+	private Enemies(int index, int color) {
 		this.color = color;
 	}
 	
-	int color() {
+	public int color() {
 		return color;
+	}
+	
+	public int index() {
+		return index;
 	}
 }

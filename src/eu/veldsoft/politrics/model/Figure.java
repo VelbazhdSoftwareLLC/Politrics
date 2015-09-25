@@ -1,10 +1,9 @@
 package eu.veldsoft.politrics.model;
 
-abstract class Figure {
-
+public abstract class Figure {
 	protected char mark = '\0';
 
-	protected int color = 0;
+	protected Enemies enemy = null;
 
 	protected boolean moving[][] = { 
 			{ false, false, false },
@@ -21,6 +20,39 @@ abstract class Figure {
 	};
 
 	boolean canStepIn(int coordinates) {
+		return true;
+	}
+
+	public char getMark() {
+		return mark;
+	}
+
+	public Enemies getEnemy() {
+		return enemy;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((enemy == null) ? 0 : enemy.hashCode());
+		result = prime * result + mark;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Figure other = (Figure) obj;
+		if (enemy != other.enemy)
+			return false;
+		if (mark != other.mark)
+			return false;
 		return true;
 	}
 }

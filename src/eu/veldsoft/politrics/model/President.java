@@ -16,8 +16,8 @@ class President extends Figure {
 		};
 	}
 	
-	President(int color) {
-		this.color = color;
+	President(Enemies color) {
+		this.enemy = enemy;
 	}
 	
 	@Override

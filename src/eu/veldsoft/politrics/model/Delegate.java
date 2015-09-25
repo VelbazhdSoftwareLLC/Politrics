@@ -19,7 +19,7 @@ class Delegate extends Figure {
 		};
 	}
 	
-	Delegate(int color) {
-		this.color = color;
+	Delegate(Enemies enemy) {
+		this.enemy = enemy;
 	}
 }

@@ -16,7 +16,7 @@ class President extends Figure {
 		};
 	}
 	
-	President(Enemies color) {
+	President(Enemies enemy) {
 		this.enemy = enemy;
 	}
 	

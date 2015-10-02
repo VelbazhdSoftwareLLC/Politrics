@@ -8,6 +8,7 @@ public enum Enemies {
 	private int color;
 	
 	private Enemies(int index, int color) {
+		this.index = index;
 		this.color = color;
 	}
 	
@@ -17,5 +18,10 @@ public enum Enemies {
 	
 	public int index() {
 		return index;
+	}
+	
+	@Override
+	public String toString() {
+		return "Enemy [index=" + index + ", color=" + color + "]";
 	}
 }

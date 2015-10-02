@@ -55,4 +55,9 @@ public abstract class Figure {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return "Figure [mark=" + mark + ", enemy=" + enemy + "]";
+	}
 }

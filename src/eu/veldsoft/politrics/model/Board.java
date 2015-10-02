@@ -66,6 +66,12 @@ public class Board {
 		for(Figure figure : pile[Enemies.LIGHT.index()]) {
 			lineups.get(Enemies.LIGHT).add(figure);
 		}
+System.err.println("=========================");
+for(Enemies key : lineups.keySet()){
+System.err.println(key);
+for(Figure figure : lineups.get(key))
+System.err.println(figure);
+}
 
 		cells[0][0] = new Cell(0xcc0000, 0, 11);
 		cells[0][1] = new Cell(0xff99ff, 0, 12);

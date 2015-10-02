@@ -5,22 +5,45 @@ import java.util.Map;
 import java.util.Vector;
 
 public class Board {
-	static final int SIZE = 9;
+	public static final int PIECES = 17;
 
-	static final int PIECES = 17;
+	public static final int SIZE = 9;
 
-	private final Figure figures[][] = new Figure[SIZE][SIZE];
-
-	private final Cell cells[][] = new Cell[SIZE][SIZE];
-
-	private final boolean aura[][] = new boolean[SIZE][SIZE];
-
+	/**
+	 * Initial container for all figures in the object model.
+	 */
 	private final Figure pile[][] = new Figure[2][PIECES];
 
+	/**
+	 * Two dimensional array with all figures on the board.
+	 */
+	private final Figure figures[][] = new Figure[SIZE][SIZE];
+
+	/**
+	 * Two dimensional array with fixed properties of the the board cells.
+	 */
+	private final Cell cells[][] = new Cell[SIZE][SIZE];
+
+	/**
+	 * Two dimensional array with civil servants aura.
+	 */
+	private final boolean aura[][] = new boolean[SIZE][SIZE];
+
+	/**
+	 * Container with figures placed in the line-ups.
+	 */
 	private final Map<Enemies, Vector<Figure>> lineups = new HashMap<Enemies, Vector<Figure>>();
 
+	/**
+	 * Board state as finite autmate.
+	 */
 	private State state = State.PLACING;
-	
+
+	/**
+	 * Turn counter.
+	 */
+	private int turn = 0;
+
 	/* Initialize object fields. */{
 		pile[Enemies.DARK.index()][0] = new President(Enemies.DARK);
 		pile[Enemies.DARK.index()][1] = new Voter(Enemies.DARK);
@@ -59,19 +82,13 @@ public class Board {
 		pile[Enemies.LIGHT.index()][16] = new Servant(Enemies.LIGHT);
 
 		lineups.put(Enemies.DARK, new Vector<Figure>());
-		for(Figure figure : pile[Enemies.DARK.index()]) {
+		for (Figure figure : pile[Enemies.DARK.index()]) {
 			lineups.get(Enemies.DARK).add(figure);
 		}
 		lineups.put(Enemies.LIGHT, new Vector<Figure>());
-		for(Figure figure : pile[Enemies.LIGHT.index()]) {
+		for (Figure figure : pile[Enemies.LIGHT.index()]) {
 			lineups.get(Enemies.LIGHT).add(figure);
 		}
-System.err.println("=========================");
-for(Enemies key : lineups.keySet()){
-System.err.println(key);
-for(Figure figure : lineups.get(key))
-System.err.println(figure);
-}
 
 		cells[0][0] = new Cell(0xcc0000, 0, 11);
 		cells[0][1] = new Cell(0xff99ff, 0, 12);
@@ -176,6 +193,27 @@ System.err.println(figure);
 		}
 	}
 
+	private Figure lineUpSelection() {
+		for (Enemies key : lineups.keySet()) {
+			for (Figure figure : lineups.get(key)) {
+				if (figure != null && figure.isSelected() == true) {
+					return figure;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private void unselectAll() {
+		for (Figure figure : pile[Enemies.DARK.index()]) {
+			figure.unselect();
+		}
+		for (Figure figure : pile[Enemies.LIGHT.index()]) {
+			figure.unselect();
+		}
+	}
+
 	/**
 	 * Cells where the figure can be placed.
 	 */
@@ -206,7 +244,89 @@ System.err.println(figure);
 		return false;
 	}
 
+	public Figure[][] getFigures() {
+		return figures;
+	}
+
 	public Map<Enemies, Vector<Figure>> getLineups() {
 		return lineups;
+	}
+
+	public void lineUpClick(int index, Enemies enemy) {
+		Figure figure = lineups.get(enemy).elementAt(index);
+
+		if (figure == null) {
+			return;
+		}
+
+		/*
+		 * Block all players except the player who turn is.
+		 */
+		if (turn % Enemies.values().length != figure.getEnemy().index()) {
+			return;
+		}
+
+		if (figure.isSelected() == true) {
+			figure.unselect();
+		} else if (figure.isUnselected() == true) {
+			unselectAll();
+			figure.select();
+		}
+	}
+
+	public void fieldClick(int i, int j) {
+		Figure figure = figures[i][j];
+
+		if (figure == null) {
+			// TODO If selected in line-up then place it in the playing field
+			// (check is it possible to be placed).
+			Figure selected = lineUpSelection();
+			if (selected == null) {
+				return;
+			} else {
+				// TODO Check for possible placement.
+
+				/*
+				 * Place it in the playing field.
+				 */
+				figures[i][j] = selected;
+
+				/*
+				 * Remove from line-up.
+				 */
+				for (Enemies key : lineups.keySet()) {
+					if (lineups.get(key).contains(selected) == true) {
+						int index = lineups.get(key).indexOf(selected);
+						lineups.get(key).remove(selected);
+						lineups.get(key).insertElementAt(null, index);
+						selected.unselect();
+
+						// TODO Handle aura if needed.
+
+						turn++;
+
+						return;
+					}
+				}
+
+				return;
+			}
+
+			// TODO If selected in the playing field then move it (take enemy's
+			// figure).
+		}
+
+		/*
+		 * Block all players except the player who turn is.
+		 */
+		if (turn % Enemies.values().length != figure.getEnemy().index()) {
+			return;
+		}
+
+		/*
+		 * Select figure in the playing field.
+		 */
+		unselectAll();
+		figure.select();
 	}
 }

@@ -6,20 +6,17 @@ class President extends Figure {
 			56, 57, 58, 62, 63, 64, 65, 66, 67, 68, 72, 73, 74, 75, 76, 77, 78,
 			82, 83, 84, 85, 86, 87, 88 };
 
-	/* Initialize object fields. */ {
+	/* Initialize object fields. */{
 		mark = 'P';
-		
-		moving = new boolean [][]{ 
-				{ true, true, true },
-				{ true, false, true }, 
-				{ true, true, true }, 
-		};
+
+		moving = new boolean[][] { { true, true, true }, { true, false, true },
+				{ true, true, true }, };
 	}
-	
+
 	President(Enemies enemy) {
 		this.enemy = enemy;
 	}
-	
+
 	@Override
 	boolean canStepIn(int coordinates) {
 		for (Integer value : RANGE) {

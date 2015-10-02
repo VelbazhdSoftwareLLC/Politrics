@@ -5,19 +5,16 @@ public abstract class Figure {
 
 	protected Enemies enemy = null;
 
-	protected boolean moving[][] = { 
-			{ false, false, false },
-			{ false, false, false }, 
-			{ false, false, false }, 
-	};
+	protected boolean selected = false;
 
-	protected boolean beating[][] = { 
+	protected boolean moving[][] = { { false, false, false },
+			{ false, false, false }, { false, false, false }, };
+
+	protected boolean beating[][] = { { false, false, false, false, false },
 			{ false, false, false, false, false },
 			{ false, false, false, false, false },
 			{ false, false, false, false, false },
-			{ false, false, false, false, false },
-			{ false, false, false, false, false },
-	};
+			{ false, false, false, false, false }, };
 
 	boolean canStepIn(int coordinates) {
 		return true;
@@ -29,6 +26,22 @@ public abstract class Figure {
 
 	public Enemies getEnemy() {
 		return enemy;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public boolean isUnselected() {
+		return !selected;
+	}
+
+	public void select() {
+		selected = true;
+	}
+
+	public void unselect() {
+		selected = false;
 	}
 
 	@Override
@@ -55,7 +68,7 @@ public abstract class Figure {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Figure [mark=" + mark + ", enemy=" + enemy + "]";

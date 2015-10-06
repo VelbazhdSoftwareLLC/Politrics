@@ -3,7 +3,7 @@ package eu.veldsoft.politrics.model;
 public abstract class Figure {
 	protected char mark = '\0';
 
-	protected Enemies enemy = null;
+	protected Enemy enemy = null;
 
 	protected boolean selected = false;
 
@@ -24,7 +24,7 @@ public abstract class Figure {
 		return mark;
 	}
 
-	public Enemies getEnemy() {
+	public Enemy getEnemy() {
 		return enemy;
 	}
 

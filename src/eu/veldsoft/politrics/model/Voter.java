@@ -14,7 +14,7 @@ class Voter extends Figure {
 				{ true, false, true, false, true }, };
 	}
 
-	Voter(Enemies enemy) {
+	Voter(Enemy enemy) {
 		this.enemy = enemy;
 	}
 }

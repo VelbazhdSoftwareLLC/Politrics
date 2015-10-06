@@ -14,7 +14,7 @@ class Delegate extends Figure {
 				{ false, false, true, false, false }, };
 	}
 
-	Delegate(Enemies enemy) {
+	Delegate(Enemy enemy) {
 		this.enemy = enemy;
 	}
 }

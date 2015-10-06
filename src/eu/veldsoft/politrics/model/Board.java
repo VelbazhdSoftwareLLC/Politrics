@@ -34,7 +34,7 @@ public class Board {
 	/**
 	 * Container with figures placed in the line-ups.
 	 */
-	private final Map<Enemies, Vector<Figure>> lineups = new HashMap<Enemies, Vector<Figure>>();
+	private final Map<Enemy, Vector<Figure>> lineups = new HashMap<Enemy, Vector<Figure>>();
 
 	/**
 	 * Board state as finite autmate.
@@ -47,49 +47,49 @@ public class Board {
 	private int turn = 0;
 
 	/* Initialize object fields. */{
-		pile[Enemies.DARK.index()][0] = new President(Enemies.DARK);
-		pile[Enemies.DARK.index()][1] = new Voter(Enemies.DARK);
-		pile[Enemies.DARK.index()][2] = new Voter(Enemies.DARK);
-		pile[Enemies.DARK.index()][3] = new Voter(Enemies.DARK);
-		pile[Enemies.DARK.index()][4] = new Voter(Enemies.DARK);
-		pile[Enemies.DARK.index()][5] = new Minister(Enemies.DARK);
-		pile[Enemies.DARK.index()][6] = new Minister(Enemies.DARK);
-		pile[Enemies.DARK.index()][7] = new Minister(Enemies.DARK);
-		pile[Enemies.DARK.index()][8] = new Minister(Enemies.DARK);
-		pile[Enemies.DARK.index()][9] = new Delegate(Enemies.DARK);
-		pile[Enemies.DARK.index()][10] = new Delegate(Enemies.DARK);
-		pile[Enemies.DARK.index()][11] = new Delegate(Enemies.DARK);
-		pile[Enemies.DARK.index()][12] = new Delegate(Enemies.DARK);
-		pile[Enemies.DARK.index()][13] = new Servant(Enemies.DARK);
-		pile[Enemies.DARK.index()][14] = new Servant(Enemies.DARK);
-		pile[Enemies.DARK.index()][15] = new Servant(Enemies.DARK);
-		pile[Enemies.DARK.index()][16] = new Servant(Enemies.DARK);
+		pile[Enemy.DARK.index()][0] = new President(Enemy.DARK);
+		pile[Enemy.DARK.index()][1] = new Voter(Enemy.DARK);
+		pile[Enemy.DARK.index()][2] = new Voter(Enemy.DARK);
+		pile[Enemy.DARK.index()][3] = new Voter(Enemy.DARK);
+		pile[Enemy.DARK.index()][4] = new Voter(Enemy.DARK);
+		pile[Enemy.DARK.index()][5] = new Minister(Enemy.DARK);
+		pile[Enemy.DARK.index()][6] = new Minister(Enemy.DARK);
+		pile[Enemy.DARK.index()][7] = new Minister(Enemy.DARK);
+		pile[Enemy.DARK.index()][8] = new Minister(Enemy.DARK);
+		pile[Enemy.DARK.index()][9] = new Delegate(Enemy.DARK);
+		pile[Enemy.DARK.index()][10] = new Delegate(Enemy.DARK);
+		pile[Enemy.DARK.index()][11] = new Delegate(Enemy.DARK);
+		pile[Enemy.DARK.index()][12] = new Delegate(Enemy.DARK);
+		pile[Enemy.DARK.index()][13] = new Servant(Enemy.DARK);
+		pile[Enemy.DARK.index()][14] = new Servant(Enemy.DARK);
+		pile[Enemy.DARK.index()][15] = new Servant(Enemy.DARK);
+		pile[Enemy.DARK.index()][16] = new Servant(Enemy.DARK);
 
-		pile[Enemies.LIGHT.index()][0] = new President(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][1] = new Voter(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][2] = new Voter(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][3] = new Voter(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][4] = new Voter(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][5] = new Minister(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][6] = new Minister(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][7] = new Minister(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][8] = new Minister(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][9] = new Delegate(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][10] = new Delegate(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][11] = new Delegate(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][12] = new Delegate(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][13] = new Servant(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][14] = new Servant(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][15] = new Servant(Enemies.LIGHT);
-		pile[Enemies.LIGHT.index()][16] = new Servant(Enemies.LIGHT);
+		pile[Enemy.LIGHT.index()][0] = new President(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][1] = new Voter(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][2] = new Voter(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][3] = new Voter(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][4] = new Voter(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][5] = new Minister(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][6] = new Minister(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][7] = new Minister(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][8] = new Minister(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][9] = new Delegate(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][10] = new Delegate(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][11] = new Delegate(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][12] = new Delegate(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][13] = new Servant(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][14] = new Servant(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][15] = new Servant(Enemy.LIGHT);
+		pile[Enemy.LIGHT.index()][16] = new Servant(Enemy.LIGHT);
 
-		lineups.put(Enemies.DARK, new Vector<Figure>());
-		for (Figure figure : pile[Enemies.DARK.index()]) {
-			lineups.get(Enemies.DARK).add(figure);
+		lineups.put(Enemy.DARK, new Vector<Figure>());
+		for (Figure figure : pile[Enemy.DARK.index()]) {
+			lineups.get(Enemy.DARK).add(figure);
 		}
-		lineups.put(Enemies.LIGHT, new Vector<Figure>());
-		for (Figure figure : pile[Enemies.LIGHT.index()]) {
-			lineups.get(Enemies.LIGHT).add(figure);
+		lineups.put(Enemy.LIGHT, new Vector<Figure>());
+		for (Figure figure : pile[Enemy.LIGHT.index()]) {
+			lineups.get(Enemy.LIGHT).add(figure);
 		}
 
 		cells[0][0] = new Cell(0xcc0000, 0, 11);
@@ -195,8 +195,16 @@ public class Board {
 		}
 	}
 
+	private void clearAura() {
+		for (int i = 0; i < aura.length; i++) {
+			for (int j = 0; j < aura[i].length; j++) {
+				aura[i][j] = false;
+			}
+		}
+	}
+
 	private Figure lineUpSelection() {
-		for (Enemies key : lineups.keySet()) {
+		for (Enemy key : lineups.keySet()) {
 			for (Figure figure : lineups.get(key)) {
 				if (figure != null && figure.isSelected() == true) {
 					return figure;
@@ -208,10 +216,10 @@ public class Board {
 	}
 
 	private void unselectAll() {
-		for (Figure figure : pile[Enemies.DARK.index()]) {
+		for (Figure figure : pile[Enemy.DARK.index()]) {
 			figure.unselect();
 		}
-		for (Figure figure : pile[Enemies.LIGHT.index()]) {
+		for (Figure figure : pile[Enemy.LIGHT.index()]) {
 			figure.unselect();
 		}
 	}
@@ -231,9 +239,10 @@ public class Board {
 	 * @param j
 	 * @param dx
 	 * @param dy
+	 * @param five
 	 * @return
 	 */
-	private int evaluate(int i, int j, int dx, int dy) {
+	private int evaluate(int i, int j, int dx, int dy, boolean five) {
 		int result = 0;
 		int score = 0;
 		int count = 0;
@@ -242,6 +251,13 @@ public class Board {
 		int counters[] = { 0, 0, 0, 0, 0 };
 		for (int k = i, l = j; k < figures.length && l < figures[i].length
 				&& k >= 0 && l >= 0; k += dx, l += dy, count++) {
+			/*
+			 * General: in a row of 6 or more figures only 5 count.
+			 */
+			if (count >= 5) {
+				break;
+			}
+
 			/*
 			 * No more figures in the line.
 			 */
@@ -304,21 +320,17 @@ public class Board {
 		/*
 		 * Report only lines with 5+ figures in them.
 		 */
-		if (count >= 5 && score > result) {
+		if (score > result && five == false) {
+			result = score;
+		}
+		if (score > result && count >= 5 && five == true) {
 			result = score;
 		}
 
 		return result;
 	}
 
-	/**
-	 * Search for win combination according player color. The function to return
-	 * score or zero if there is no line of 5+.
-	 * 
-	 * @param enemy
-	 * @return
-	 */
-	private int fiveInRow(Enemies enemy) {
+	private int score(Enemy enemy, boolean five) {
 		int result = 0;
 
 		for (int i = 0, score; i < figures.length; i++) {
@@ -337,7 +349,7 @@ public class Board {
 				/*
 				 * Check for horizontal line.
 				 */
-				score = evaluate(i, j, 1, 0);
+				score = evaluate(i, j, 1, 0, five);
 				if (score > result) {
 					result = score;
 				}
@@ -345,7 +357,7 @@ public class Board {
 				/*
 				 * Check for vertical line.
 				 */
-				score = evaluate(i, j, 0, 1);
+				score = evaluate(i, j, 0, 1, five);
 				if (score > result) {
 					result = score;
 				}
@@ -353,7 +365,7 @@ public class Board {
 				/*
 				 * Check for primary diagonal line.
 				 */
-				score = evaluate(i, j, 1, 1);
+				score = evaluate(i, j, 1, 1, five);
 				if (score > result) {
 					result = score;
 				}
@@ -361,7 +373,7 @@ public class Board {
 				/*
 				 * Check for secondary diagonal line.
 				 */
-				score = evaluate(i, j, 1, -1);
+				score = evaluate(i, j, 1, -1, five);
 				if (score > result) {
 					result = score;
 				}
@@ -372,25 +384,202 @@ public class Board {
 	}
 
 	/**
+	 * 
+	 * @param enemy
+	 * @return
+	 */
+	private int maxScoreWhithoutFiveInRow(Enemy enemy) {
+		return score(enemy, false);
+	}
+
+	/**
+	 * Search for win combination according player color. The function to return
+	 * score or zero if there is no line of 5+.
+	 * 
+	 * @param enemy
+	 * @return
+	 */
+	private int maxScoreWithFiveInRow(Enemy enemy) {
+		return score(enemy, true);
+	}
+
+	/**
 	 * Check for win combination possibility.
 	 * 
 	 * @param enemy
 	 * @return
 	 */
-	private boolean hasMoreThanFour(Enemies enemy) {
-		// TODO Search for.
+	private boolean hasMoreThanFour(Enemy enemy) {
+		int count = 0;
+
+		/*
+		 * Line-up check.
+		 */
+		for (Figure figure : lineups.get(enemy)) {
+			if (figure != null) {
+				count++;
+			}
+		}
+
+		/*
+		 * Playing field check.
+		 */
+		for (int i = 0; i < figures.length; i++) {
+			for (int j = 0; j < figures[i].length; j++) {
+				if (figures[i][j] == null) {
+					continue;
+				}
+
+				if (figures[i][j].getEnemy() == enemy) {
+					count++;
+				}
+			}
+		}
+
+		/*
+		 * 
+		 */
+		if (count >= 5) {
+			return true;
+		}
+
 		return false;
+	}
+
+	/**
+	 * Check for president in the line-up or on the playing field.
+	 * 
+	 * @param enemy
+	 * @return
+	 */
+	private boolean hasAlivePresident(Enemy enemy) {
+		/*
+		 * Line-up check.
+		 */
+		for (Figure figure : lineups.get(enemy)) {
+			if (figure == null) {
+				continue;
+			}
+
+			if (figure instanceof President) {
+				return true;
+			}
+		}
+
+		/*
+		 * Playing field check.
+		 */
+		for (int i = 0; i < figures.length; i++) {
+			for (int j = 0; j < figures[i].length; j++) {
+				if (figures[i][j] == null) {
+					continue;
+				}
+
+				if (figures[i][j] instanceof President) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check line-up empty and playing filed retirement cells.
+	 * 
+	 * @param enemy
+	 * @return
+	 */
+	private boolean allFiguresBlocked(Enemy enemy) {
+		/*
+		 * Line-up check.
+		 */
+		for (Figure figure : lineups.get(enemy)) {
+			if (figure != null && figure instanceof President == false) {
+				return false;
+			}
+		}
+
+		/*
+		 * Part of playing field check.
+		 */
+		for (int i = 1; i < figures.length - 1; i++) {
+			for (int j = 1; j < figures[i].length - 1; j++) {
+				if (figures[i][j] == null) {
+					continue;
+				}
+
+				/*
+				 * President does not count for blocking.
+				 */
+				if (figures[i][j] instanceof President) {
+					continue;
+				}
+
+				/*
+				 * Civil servants are always blocked on the playing filed.
+				 */
+				if (figures[i][j] instanceof Servant) {
+					continue;
+				}
+
+				if (figures[i][j].getEnemy() == enemy) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private void spreadAura() {
+		clearAura();
+
+		for (int i = 0; i < aura.length; i++) {
+			for (int j = 0; j < aura[i].length; j++) {
+				if (figures[i][j] == null) {
+					continue;
+				}
+
+				if (figures[i][j] instanceof Servant == false) {
+					continue;
+				}
+
+				for (int k = i - 1; k <= i + 1; k++) {
+					for (int l = j - 1; l <= j + 1; l++) {
+						if (k < 0) {
+							continue;
+						}
+						if (l < 0) {
+							continue;
+						}
+						if (k >= aura.length) {
+							continue;
+						}
+						if (l >= aura[k].length) {
+							continue;
+						}
+
+						aura[k][l] = true;
+					}
+				}
+			}
+		}
 	}
 
 	public Figure[][] getFigures() {
 		return figures;
 	}
 
-	public Map<Enemies, Vector<Figure>> getLineups() {
+	public Map<Enemy, Vector<Figure>> getLineups() {
 		return lineups;
 	}
 
-	public void lineUpClick(int index, Enemies enemy) {
+	public State getState() {
+		return state;
+	}
+
+	public void lineUpClick(int index, Enemy enemy) {
 		Figure figure = lineups.get(enemy).elementAt(index);
 
 		if (figure == null) {
@@ -400,7 +589,7 @@ public class Board {
 		/*
 		 * Block all players except the player who turn is.
 		 */
-		if (turn % Enemies.values().length != figure.getEnemy().index()) {
+		if (turn % Enemy.values().length != figure.getEnemy().index()) {
 			return;
 		}
 
@@ -428,11 +617,12 @@ public class Board {
 				 * Place it in the playing field.
 				 */
 				figures[i][j] = selected;
+				spreadAura();
 
 				/*
 				 * Remove from line-up.
 				 */
-				for (Enemies key : lineups.keySet()) {
+				for (Enemy key : lineups.keySet()) {
 					if (lineups.get(key).contains(selected) == true) {
 						int index = lineups.get(key).indexOf(selected);
 						lineups.get(key).remove(selected);
@@ -457,7 +647,7 @@ public class Board {
 		/*
 		 * Block all players except the player who turn is.
 		 */
-		if (turn % Enemies.values().length != figure.getEnemy().index()) {
+		if (turn % Enemy.values().length != figure.getEnemy().index()) {
 			return;
 		}
 
@@ -466,5 +656,56 @@ public class Board {
 		 */
 		unselectAll();
 		figure.select();
+	}
+
+	/**
+	 * Check for win situation.
+	 * 
+	 * @param enemy
+	 * @return Zero if player is not a winner. Wining score if the player is a
+	 *         winner.
+	 */
+	public Object[] winner() {
+		Enemy enemy = Enemy.value(turn % Enemy.values().length);
+
+		int score = 0;
+
+		/*
+		 * Win by line of five.
+		 */
+		score = maxScoreWithFiveInRow(enemy);
+		if (score > 0) {
+			state = State.FINISHED;
+			return new Object[] { enemy, score };
+		}
+
+		/*
+		 * Beat opponent's president.
+		 */
+		if (hasAlivePresident(enemy.opponent()) == false) {
+			state = State.FINISHED;
+			score = maxScoreWhithoutFiveInRow(enemy);
+			return new Object[] { enemy, score };
+		}
+
+		/*
+		 * Opponent is out of available figures.
+		 */
+		if (hasMoreThanFour(enemy.opponent()) == false) {
+			state = State.FINISHED;
+			score = maxScoreWhithoutFiveInRow(enemy);
+			return new Object[] { enemy, score };
+		}
+
+		/*
+		 * Opponent is blocked.
+		 */
+		if (allFiguresBlocked(enemy.opponent()) == true) {
+			state = State.FINISHED;
+			score = maxScoreWhithoutFiveInRow(enemy);
+			return new Object[] { enemy, score };
+		}
+
+		return new Object[] { enemy, 0 };
 	}
 }

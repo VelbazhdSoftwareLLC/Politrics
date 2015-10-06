@@ -14,7 +14,7 @@ class Minister extends Figure {
 				{ true, false, false, false, true }, };
 	}
 
-	Minister(Enemies enemy) {
+	Minister(Enemy enemy) {
 		this.enemy = enemy;
 	}
 }

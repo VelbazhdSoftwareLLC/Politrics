@@ -1,5 +1,5 @@
 package eu.veldsoft.politrics.model;
 
-enum State {
-	PLACING, PLAYING
+public enum State {
+	PLACING, PLAYING, FINISHED
 }

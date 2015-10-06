@@ -44,6 +44,22 @@ public abstract class Figure {
 		selected = false;
 	}
 
+	public int index() {
+		if (this instanceof President) {
+			return 0;
+		} else if (this instanceof Voter) {
+			return 1;
+		} else if (this instanceof Minister) {
+			return 2;
+		} else if (this instanceof Delegate) {
+			return 3;
+		} else if (this instanceof Servant) {
+			return 4;
+		}
+
+		return -1;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

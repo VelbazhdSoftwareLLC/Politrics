@@ -1,5 +1,7 @@
 package eu.veldsoft.politrics.model;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -223,14 +225,150 @@ public class Board {
 	}
 
 	/**
-	 * Search for win combination according player color.
+	 * Evaluate line in particular direction given by dx and dy.
+	 * 
+	 * @param i
+	 * @param j
+	 * @param dx
+	 * @param dy
+	 * @return
+	 */
+	private int evaluate(int i, int j, int dx, int dy) {
+		int result = 0;
+		int score = 0;
+		int count = 0;
+		boolean central = false;
+		boolean president = false;
+		int counters[] = { 0, 0, 0, 0, 0 };
+		for (int k = i, l = j; k < figures.length && l < figures[i].length
+				&& k >= 0 && l >= 0; k += dx, l += dy, count++) {
+			/*
+			 * No more figures in the line.
+			 */
+			if (figures[k][l] == null) {
+				break;
+			}
+
+			/*
+			 * End of the line, because next figure is not of the same player.
+			 */
+			if (figures[k][l].getEnemy() != figures[i][j].getEnemy()) {
+				break;
+			}
+
+			/*
+			 * Count figure from the same kind.
+			 */
+			counters[figures[k][l].index()]++;
+
+			/*
+			 * Pass through central cell.
+			 */
+			if (cells[k][l].getCoordinates() == 55) {
+				central = true;
+			}
+
+			/*
+			 * Check for president in the line.
+			 */
+			if (figures[k][l] instanceof President) {
+				president = true;
+			}
+
+			score += cells[k][l].getPoints();
+		}
+
+		/*
+		 * Apply multiplier rule.
+		 */
+		if (central == true || president == true) {
+			int multiplier = 0;
+
+			/*
+			 * Estimate multiplier.
+			 */
+			Arrays.sort(counters);
+			multiplier = counters[counters.length - 1];
+
+			/*
+			 * If there is a president in the combination then increase
+			 * multiplier by one.
+			 */
+			if (president == true) {
+				multiplier++;
+			}
+
+			score *= multiplier;
+		}
+
+		/*
+		 * Report only lines with 5+ figures in them.
+		 */
+		if (count >= 5 && score > result) {
+			result = score;
+		}
+
+		return result;
+	}
+
+	/**
+	 * Search for win combination according player color. The function to return
+	 * score or zero if there is no line of 5+.
 	 * 
 	 * @param enemy
 	 * @return
 	 */
-	private boolean fiveInRow(Enemies enemy) {
-		// TODO Search for.
-		return false;
+	private int fiveInRow(Enemies enemy) {
+		int result = 0;
+
+		for (int i = 0, score; i < figures.length; i++) {
+			for (int j = 0; j < figures[i].length; j++) {
+				/*
+				 * Do not search if there is no figure in the cell.
+				 */
+				if (figures[i][j] == null) {
+					continue;
+				}
+
+				if (figures[i][j].getEnemy() != enemy) {
+					continue;
+				}
+
+				/*
+				 * Check for horizontal line.
+				 */
+				score = evaluate(i, j, 1, 0);
+				if (score > result) {
+					result = score;
+				}
+
+				/*
+				 * Check for vertical line.
+				 */
+				score = evaluate(i, j, 0, 1);
+				if (score > result) {
+					result = score;
+				}
+
+				/*
+				 * Check for primary diagonal line.
+				 */
+				score = evaluate(i, j, 1, 1);
+				if (score > result) {
+					result = score;
+				}
+
+				/*
+				 * Check for secondary diagonal line.
+				 */
+				score = evaluate(i, j, 1, -1);
+				if (score > result) {
+					result = score;
+				}
+			}
+		}
+
+		return result;
 	}
 
 	/**

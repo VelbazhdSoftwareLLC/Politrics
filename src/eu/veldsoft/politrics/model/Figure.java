@@ -65,6 +65,7 @@ public abstract class Figure {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((enemy == null) ? 0 : enemy.hashCode());
+		result = prime * result + super.hashCode();
 		result = prime * result + mark;
 		return result;
 	}
@@ -80,11 +81,13 @@ public abstract class Figure {
 		Figure other = (Figure) obj;
 		if (enemy != other.enemy)
 			return false;
+		if (hashCode() != other.hashCode())
+			return false;
 		if (mark != other.mark)
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Figure [mark=" + mark + ", enemy=" + enemy + "]";

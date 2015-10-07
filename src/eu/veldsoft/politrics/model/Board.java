@@ -579,18 +579,18 @@ public class Board {
 		return state;
 	}
 
-	public void lineUpClick(int index, Enemy enemy) {
+	public boolean lineUpClick(int index, Enemy enemy) {
 		Figure figure = lineups.get(enemy).elementAt(index);
 
 		if (figure == null) {
-			return;
+			return false;
 		}
-
+		
 		/*
 		 * Block all players except the player who turn is.
 		 */
 		if (turn % Enemy.values().length != figure.getEnemy().index()) {
-			return;
+			return false;
 		}
 
 		if (figure.isSelected() == true) {
@@ -599,9 +599,11 @@ public class Board {
 			unselectAll();
 			figure.select();
 		}
+		
+		return true;
 	}
 
-	public void fieldClick(int i, int j) {
+	public boolean fieldClick(int i, int j) {
 		Figure figure = figures[i][j];
 
 		if (figure == null) {
@@ -609,7 +611,7 @@ public class Board {
 			// (check is it possible to be placed).
 			Figure selected = lineUpSelection();
 			if (selected == null) {
-				return;
+				return false;
 			} else {
 				// TODO Check for possible placement.
 
@@ -625,19 +627,16 @@ public class Board {
 				for (Enemy key : lineups.keySet()) {
 					if (lineups.get(key).contains(selected) == true) {
 						int index = lineups.get(key).indexOf(selected);
-						lineups.get(key).remove(selected);
-						lineups.get(key).insertElementAt(null, index);
+						lineups.get(key).set(index, null);
 						selected.unselect();
 
 						// TODO Handle aura if needed.
 
-						turn++;
-
-						return;
+						return true;
 					}
 				}
 
-				return;
+				return false;
 			}
 
 			// TODO If selected in the playing field then move it (take enemy's
@@ -648,7 +647,7 @@ public class Board {
 		 * Block all players except the player who turn is.
 		 */
 		if (turn % Enemy.values().length != figure.getEnemy().index()) {
-			return;
+			return false;
 		}
 
 		/*
@@ -656,8 +655,14 @@ public class Board {
 		 */
 		unselectAll();
 		figure.select();
+		
+		return false;
 	}
 
+	public void nextTurn() {
+		turn++;
+	}
+	
 	/**
 	 * Check for win situation.
 	 * 
@@ -666,6 +671,9 @@ public class Board {
 	 *         winner.
 	 */
 	public Object[] winner() {
+		/*
+		 * Check for the previous player.
+		 */
 		Enemy enemy = Enemy.value(turn % Enemy.values().length);
 
 		int score = 0;

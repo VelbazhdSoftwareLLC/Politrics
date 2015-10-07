@@ -2,7 +2,7 @@ package eu.veldsoft.politrics.model;
 
 public enum Enemy {
 	DARK(0, 0x6633cc), LIGHT(1, 0xff6600);
-	
+
 	private int index;
 
 	private int color;
@@ -51,6 +51,13 @@ public enum Enemy {
 
 	@Override
 	public String toString() {
-		return "Enemy [index=" + index + ", color=" + color + "]";
+		switch (this) {
+		case DARK:
+			return "dark";
+		case LIGHT:
+			return "light";
+		}
+
+		return "";
 	}
 }

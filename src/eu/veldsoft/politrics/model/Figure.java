@@ -44,6 +44,10 @@ public abstract class Figure {
 		selected = false;
 	}
 
+	public void invert() {
+		selected = !selected;
+	}
+
 	public int index() {
 		if (this instanceof President) {
 			return 0;

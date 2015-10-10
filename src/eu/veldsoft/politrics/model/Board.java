@@ -567,6 +567,46 @@ public class Board {
 		}
 	}
 
+	private boolean emptyFieldClidk(int i, int j) {
+		// TODO If selected in line-up then place it in the playing field
+		// (check is it possible to be placed).
+		Figure selected = lineUpSelection();
+
+		/*
+		 * If there is no selected figure in the line-ups, there is nothing to
+		 * do.
+		 */
+		if (selected == null) {
+			return false;
+		}
+
+		// TODO Check for possible placement.
+
+		/*
+		 * Place it in the playing field.
+		 */
+		figures[i][j] = selected;
+		spreadAura();
+
+		/*
+		 * Remove from line-up.
+		 */
+		for (Enemy key : lineups.keySet()) {
+			if (lineups.get(key).contains(selected) == true) {
+				int index = lineups.get(key).indexOf(selected);
+				lineups.get(key).set(index, null);
+				selected.unselect();
+
+				return true;
+			}
+		}
+
+		// TODO If selected in the playing field then move it (take enemy's
+		// figure).
+
+		return false;
+	}
+
 	public Figure[][] getFigures() {
 		return figures;
 	}
@@ -579,18 +619,18 @@ public class Board {
 		return state;
 	}
 
-	public boolean lineUpClick(int index, Enemy enemy) {
+	public void lineUpClick(int index, Enemy enemy) {
 		Figure figure = lineups.get(enemy).elementAt(index);
 
 		if (figure == null) {
-			return false;
+			return;
 		}
-		
+
 		/*
 		 * Block all players except the player who turn is.
 		 */
 		if (turn % Enemy.values().length != figure.getEnemy().index()) {
-			return false;
+			return;
 		}
 
 		if (figure.isSelected() == true) {
@@ -599,48 +639,16 @@ public class Board {
 			unselectAll();
 			figure.select();
 		}
-		
-		return true;
 	}
 
 	public boolean fieldClick(int i, int j) {
 		Figure figure = figures[i][j];
 
+		/*
+		 * Try to place figure on the playing field.
+		 */
 		if (figure == null) {
-			// TODO If selected in line-up then place it in the playing field
-			// (check is it possible to be placed).
-			Figure selected = lineUpSelection();
-			if (selected == null) {
-				return false;
-			} else {
-				// TODO Check for possible placement.
-
-				/*
-				 * Place it in the playing field.
-				 */
-				figures[i][j] = selected;
-				spreadAura();
-
-				/*
-				 * Remove from line-up.
-				 */
-				for (Enemy key : lineups.keySet()) {
-					if (lineups.get(key).contains(selected) == true) {
-						int index = lineups.get(key).indexOf(selected);
-						lineups.get(key).set(index, null);
-						selected.unselect();
-
-						// TODO Handle aura if needed.
-
-						return true;
-					}
-				}
-
-				return false;
-			}
-
-			// TODO If selected in the playing field then move it (take enemy's
-			// figure).
+			return emptyFieldClidk(i, j);
 		}
 
 		/*
@@ -648,21 +656,19 @@ public class Board {
 		 */
 		if (turn % Enemy.values().length != figure.getEnemy().index()) {
 			return false;
+		} else {
+			/*
+			 * Select figure in the playing field.
+			 */
+			figure.invert();
+			return false;
 		}
-
-		/*
-		 * Select figure in the playing field.
-		 */
-		unselectAll();
-		figure.select();
-		
-		return false;
 	}
 
 	public void nextTurn() {
 		turn++;
 	}
-	
+
 	/**
 	 * Check for win situation.
 	 * 

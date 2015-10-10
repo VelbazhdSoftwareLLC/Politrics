@@ -30,28 +30,22 @@ public class GameActivity extends Activity {
 			boolean moveDone = false;
 			
 			if (board.getState() == State.FINISHED) {
+				//TODO Use string resources.
 				Toast.makeText(GameActivity.this, "Start new game!",
 						Toast.LENGTH_LONG).show();
+				return;
 			}
 
 			loop1: for (int k = 0; k < darkLineUp.length; k++) {
 				if (darkLineUp[k] == view) {
-					moveDone = board.lineUpClick(k, Enemy.DARK);
-					if(moveDone == true) {
-						winner = board.winner();
-						board.nextTurn();
-					}
+					board.lineUpClick(k, Enemy.DARK);
 					break loop1;
 				}
 			}
 
 			loop2: for (int k = 0; k < lightLineUp.length; k++) {
 				if (lightLineUp[k] == view) {
-					moveDone = board.lineUpClick(k, Enemy.LIGHT);
-					if(moveDone == true) {
-						winner = board.winner();
-						board.nextTurn();
-					}
+					board.lineUpClick(k, Enemy.LIGHT);
 					break loop2;
 				}
 			}
@@ -143,6 +137,7 @@ public class GameActivity extends Activity {
 		 * Show winner message.
 		 */
 		if ((Integer) winner[1] > 0) {
+			//TODO Use string resources.
 			Toast.makeText(
 					GameActivity.this,
 					"You (" + (Enemy) winner[0] + ") win: "

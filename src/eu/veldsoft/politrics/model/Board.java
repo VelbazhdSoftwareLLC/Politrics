@@ -203,6 +203,18 @@ public class Board {
 		}
 	}
 
+	private Figure boardSelection() {
+		for (int i = 0; i < figures.length; i++) {
+			for (int j = 0; j < figures[i].length; j++) {
+				if (figures[i][j] != null && figures[i][j].isSelected() == true) {
+					return figures[i][j];
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private Figure lineUpSelection() {
 		for (Enemy key : lineups.keySet()) {
 			for (Figure figure : lineups.get(key)) {
@@ -213,15 +225,6 @@ public class Board {
 		}
 
 		return null;
-	}
-
-	private void unselectAll() {
-		for (Figure figure : pile[Enemy.DARK.index()]) {
-			figure.unselect();
-		}
-		for (Figure figure : pile[Enemy.LIGHT.index()]) {
-			figure.unselect();
-		}
 	}
 
 	/**
@@ -567,9 +570,151 @@ public class Board {
 		}
 	}
 
-	private boolean emptyFieldClidk(int i, int j) {
-		// TODO If selected in line-up then place it in the playing field
-		// (check is it possible to be placed).
+	private Integer[] selectedFigureCoordinates() {
+		/*
+		 * Find selected figure coordinates.
+		 */
+		int a, b;
+		loop: for (a = 0, b = 0; a < figures.length; a++) {
+			for (b = 0; b < figures[a].length; b++) {
+				if (figures[a][b] == null) {
+					continue;
+				}
+
+				if (figures[a][b].isSelected() == true) {
+					break loop;
+				}
+			}
+		}
+
+		return new Integer[] { a, b };
+	}
+
+	private boolean figureCaptureClicked(int i, int j) {
+		Figure selected = boardSelection();
+
+		/*
+		 * If there is no selected figure on the board, there is nothing to do.
+		 */
+		if (selected == null) {
+			return false;
+		}
+
+		/*
+		 * President can not be beat.
+		 */
+		if (selected instanceof President) {
+			return false;
+		}
+
+		/*
+		 * Servant can not be beat.
+		 */
+		if (selected instanceof Servant) {
+			return false;
+		}
+
+		/*
+		 * Find selected figure coordinates.
+		 */
+		Integer[] c = selectedFigureCoordinates();
+
+		/*
+		 * To capture figure it should be next to each other.
+		 */
+		if (i - c[0] < -1 || j - c[1] < -1 || i - c[0] > +1 || j - c[1] > +1) {
+			return false;
+		}
+
+		/*
+		 * Figure can not capture itself.
+		 */
+		if (i == c[0] && j == c[1]) {
+			return false;
+		}
+
+		/*
+		 * Can not capture your own figures.
+		 */
+		if (selected.getEnemy() == figures[i][j].getEnemy()) {
+			return false;
+		}
+
+		/*
+		 * Try to capture enemy figure.
+		 */
+		if (selected.canCaptureIn((i - c[0]) * 2, (j - c[1]) * 2) == true) {
+			int a = c[0] + (i - c[0]) * 2;
+			int b = c[1] + (j - c[1]) * 2;
+
+			/*
+			 * Can not go outside of the board.
+			 */
+			if (a < 0 || b < 0 || a >= SIZE || b >= SIZE) {
+				return false;
+			}
+
+			/*
+			 * Can not go on the occupied cell.
+			 */
+			if (figures[a][b] != null) {
+				return false;
+			}
+
+			/*
+			 * Capture enemy figure.
+			 */
+			selected.unselect();
+			figures[a][b] = figures[c[0]][c[1]];
+			figures[c[0]][c[1]] = null;
+			figures[i][j] = null;
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean figureMoveClicked(int i, int j) {
+		Figure selected = boardSelection();
+
+		/*
+		 * If there is no selected figure on the board, there is nothing to do.
+		 */
+		if (selected == null) {
+			return false;
+		}
+
+		/*
+		 * President can not be in servants' aura.
+		 */
+		if (selected instanceof President && aura[i][j] == true) {
+			return false;
+		}
+
+		/*
+		 * Find selected figure coordinates.
+		 */
+		Integer[] c = selectedFigureCoordinates();
+
+		/*
+		 * Can not move on the border.
+		 */
+		if (c[0] == 0 || c[1] == 0 || c[0] == SIZE - 1 || c[1] == SIZE - 1) {
+			return false;
+		}
+
+		// TODO May be it should be (a-i) and (b-j).
+		if (selected.canMoveIn(i - c[0], j - c[1]) == true) {
+			selected.unselect();
+			figures[i][j] = figures[c[0]][c[1]];
+			figures[c[0]][c[1]] = null;
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean figurePlaceClicked(int i, int j) {
 		Figure selected = lineUpSelection();
 
 		/*
@@ -580,7 +725,58 @@ public class Board {
 			return false;
 		}
 
-		// TODO Check for possible placement.
+		/*
+		 * President can not be in servants' aura.
+		 */
+		if (selected instanceof President && aura[i][j] == true) {
+			return false;
+		}
+
+		/*
+		 * President can not be retired.
+		 */
+		if (selected instanceof President) {
+			// TODO Move checking in other class.
+			if (i == 0) {
+				return false;
+			}
+			if (j == 0) {
+				return false;
+			}
+			if (i == SIZE - 1) {
+				return false;
+			}
+			if (j == SIZE - 1) {
+				return false;
+			}
+		}
+
+		/*
+		 * Servant can not be placed next to a President.
+		 */
+		if (selected instanceof Servant) {
+			// TODO Move checking in other class.
+			for (int k = i - 1; k <= i + 1; k++) {
+				for (int l = j - 1; l <= j + 1; l++) {
+					if (k < 0) {
+						continue;
+					}
+					if (l < 0) {
+						continue;
+					}
+					if (k >= SIZE) {
+						continue;
+					}
+					if (l >= SIZE) {
+						continue;
+					}
+
+					if (figures[k][l] instanceof President) {
+						return false;
+					}
+				}
+			}
+		}
 
 		/*
 		 * Place it in the playing field.
@@ -611,12 +807,25 @@ public class Board {
 		return figures;
 	}
 
+	public boolean[][] getAura() {
+		return aura;
+	}
+
 	public Map<Enemy, Vector<Figure>> getLineups() {
 		return lineups;
 	}
 
 	public State getState() {
 		return state;
+	}
+
+	public void unselectAll() {
+		for (Figure figure : pile[Enemy.DARK.index()]) {
+			figure.unselect();
+		}
+		for (Figure figure : pile[Enemy.LIGHT.index()]) {
+			figure.unselect();
+		}
 	}
 
 	public void lineUpClick(int index, Enemy enemy) {
@@ -642,13 +851,37 @@ public class Board {
 	}
 
 	public boolean fieldClick(int i, int j) {
+		/*
+		 * Reference to the target cell.
+		 */
 		Figure figure = figures[i][j];
 
 		/*
 		 * Try to place figure on the playing field.
 		 */
+		if (figure == null && lineUpSelection() != null) {
+			return figurePlaceClicked(i, j);
+		}
+
+		/*
+		 * Try to move figure on the board.
+		 */
+		if (figure == null && boardSelection() != null) {
+			return figureMoveClicked(i, j);
+		}
+
+		/*
+		 * There is nothing to be done.
+		 */
 		if (figure == null) {
-			return emptyFieldClidk(i, j);
+			return false;
+		}
+
+		/*
+		 * Try to capture opponet's figure.
+		 */
+		if (figure != null && boardSelection() != null) {
+			return figureCaptureClicked(i, j);
 		}
 
 		/*

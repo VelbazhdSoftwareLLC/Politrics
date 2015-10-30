@@ -20,6 +20,34 @@ public abstract class Figure {
 		return true;
 	}
 
+	public boolean canCaptureIn(int dx, int dy) {
+		/*
+		 * No more than one cell distance.
+		 */
+		if (dx < -2 || dy < -2 || dx > +2 || dy > +2) {
+			return false;
+		}
+
+		dx += 2;
+		dy += 2;
+
+		return beating[dx][dy];
+	}
+
+	boolean canMoveIn(int dx, int dy) {
+		/*
+		 * No more than one cell distance.
+		 */
+		if (dx < -1 || dy < -1 || dx > +1 || dy > +1) {
+			return false;
+		}
+
+		dx++;
+		dy++;
+
+		return moving[dx][dy];
+	}
+
 	public char getMark() {
 		return mark;
 	}
@@ -91,7 +119,7 @@ public abstract class Figure {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Figure [mark=" + mark + ", enemy=" + enemy + "]";

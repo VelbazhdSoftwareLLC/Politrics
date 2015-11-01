@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,8 +26,7 @@ public class GameActivity extends Activity {
 	private Map<Object, Integer> objectToImageId = new HashMap<Object, Integer>();
 
 	private Board board = new Board();
-
-	Object winner[] = { null, 0 };
+	private Object winner[] = { null, 0 };
 
 	private View.OnClickListener listener = new View.OnClickListener() {
 		@Override
@@ -32,8 +35,7 @@ public class GameActivity extends Activity {
 
 			if (board.getState() == State.FINISHED) {
 				// TODO Use string resources.
-				Toast.makeText(GameActivity.this, "Start new game!",
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(GameActivity.this, "Start new game!", Toast.LENGTH_LONG).show();
 				return;
 			}
 
@@ -146,8 +148,7 @@ public class GameActivity extends Activity {
 					faces[i][j].setAlpha(0.5F);
 				}
 
-				faces[i][j]
-						.setImageResource(objectToImageId.get(figures[i][j]));
+				faces[i][j].setImageResource(objectToImageId.get(figures[i][j]));
 			}
 		}
 
@@ -156,11 +157,8 @@ public class GameActivity extends Activity {
 		 */
 		if ((Integer) winner[1] > 0) {
 			// TODO Use string resources.
-			Toast.makeText(
-					GameActivity.this,
-					"You (" + (Enemy) winner[0] + ") win: "
-							+ (Integer) winner[1] + " !", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(GameActivity.this, "You (" + (Enemy) winner[0] + ") win: " + (Integer) winner[1] + " !",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -369,75 +367,41 @@ public class GameActivity extends Activity {
 		auras[7][8] = (ImageView) findViewById(R.id.aura78);
 		auras[8][8] = (ImageView) findViewById(R.id.aura88);
 
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(0),
-				R.drawable.president_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(1),
-				R.drawable.voter_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(2),
-				R.drawable.voter_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(3),
-				R.drawable.voter_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(4),
-				R.drawable.voter_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(5),
-				R.drawable.minister_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(6),
-				R.drawable.minister_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(7),
-				R.drawable.minister_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(8),
-				R.drawable.minister_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(9),
-				R.drawable.delegate_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(10),
-				R.drawable.delegate_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(11),
-				R.drawable.delegate_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(12),
-				R.drawable.delegate_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(13),
-				R.drawable.servant_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(14),
-				R.drawable.servant_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(15),
-				R.drawable.servant_violet);
-		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(16),
-				R.drawable.servant_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(0), R.drawable.president_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(1), R.drawable.voter_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(2), R.drawable.voter_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(3), R.drawable.voter_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(4), R.drawable.voter_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(5), R.drawable.minister_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(6), R.drawable.minister_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(7), R.drawable.minister_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(8), R.drawable.minister_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(9), R.drawable.delegate_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(10), R.drawable.delegate_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(11), R.drawable.delegate_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(12), R.drawable.delegate_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(13), R.drawable.servant_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(14), R.drawable.servant_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(15), R.drawable.servant_violet);
+		objectToImageId.put(board.getLineups().get(Enemy.DARK).elementAt(16), R.drawable.servant_violet);
 
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(0),
-				R.drawable.president_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(1),
-				R.drawable.voter_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(2),
-				R.drawable.voter_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(3),
-				R.drawable.voter_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(4),
-				R.drawable.voter_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(5),
-				R.drawable.minister_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(6),
-				R.drawable.minister_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(7),
-				R.drawable.minister_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(8),
-				R.drawable.minister_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(9),
-				R.drawable.delegate_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(10),
-				R.drawable.delegate_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(11),
-				R.drawable.delegate_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(12),
-				R.drawable.delegate_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(13),
-				R.drawable.servant_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(14),
-				R.drawable.servant_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(15),
-				R.drawable.servant_orange);
-		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(16),
-				R.drawable.servant_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(0), R.drawable.president_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(1), R.drawable.voter_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(2), R.drawable.voter_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(3), R.drawable.voter_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(4), R.drawable.voter_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(5), R.drawable.minister_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(6), R.drawable.minister_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(7), R.drawable.minister_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(8), R.drawable.minister_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(9), R.drawable.delegate_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(10), R.drawable.delegate_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(11), R.drawable.delegate_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(12), R.drawable.delegate_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(13), R.drawable.servant_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(14), R.drawable.servant_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(15), R.drawable.servant_orange);
+		objectToImageId.put(board.getLineups().get(Enemy.LIGHT).elementAt(16), R.drawable.servant_orange);
 
 		/*
 		 * Attach on-click listener.
@@ -455,5 +419,31 @@ public class GameActivity extends Activity {
 		}
 
 		updateViews();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.game_option_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.new_game:
+			board = new Board();
+			winner[0] = null;
+			winner[1] = new Integer(0);
+			break;
+		case R.id.help_game:
+			startActivity(new Intent(GameActivity.this, HelpActivity.class));
+			break;
+		case R.id.about_game:
+			startActivity(new Intent(GameActivity.this, AboutActivity.class));
+			break;
+		}
+
+		return true;
 	}
 }

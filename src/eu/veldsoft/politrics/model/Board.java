@@ -83,15 +83,6 @@ public class Board {
 		pile[Enemy.LIGHT.index()][15] = new Servant(Enemy.LIGHT);
 		pile[Enemy.LIGHT.index()][16] = new Servant(Enemy.LIGHT);
 
-		lineups.put(Enemy.DARK, new Vector<Figure>());
-		for (Figure figure : pile[Enemy.DARK.index()]) {
-			lineups.get(Enemy.DARK).add(figure);
-		}
-		lineups.put(Enemy.LIGHT, new Vector<Figure>());
-		for (Figure figure : pile[Enemy.LIGHT.index()]) {
-			lineups.get(Enemy.LIGHT).add(figure);
-		}
-
 		cells[0][0] = new Cell(0xcc0000, 0, 11);
 		cells[0][1] = new Cell(0xff99ff, 0, 12);
 		cells[0][2] = new Cell(0xcc0000, 0, 13);
@@ -182,17 +173,7 @@ public class Board {
 		cells[8][7] = new Cell(0xff99ff, 0, 98);
 		cells[8][8] = new Cell(0xcc0000, 0, 99);
 
-		for (int i = 0; i < figures.length; i++) {
-			for (int j = 0; j < figures[i].length; j++) {
-				figures[i][j] = null;
-			}
-		}
-
-		for (int i = 0; i < aura.length; i++) {
-			for (int j = 0; j < aura[i].length; j++) {
-				aura[i][j] = false;
-			}
-		}
+		reset();
 	}
 
 	private void clearAura() {
@@ -200,6 +181,26 @@ public class Board {
 			for (int j = 0; j < aura[i].length; j++) {
 				aura[i][j] = false;
 			}
+		}
+	}
+
+	private void clearFigures() {
+		for (int i = 0; i < figures.length; i++) {
+			for (int j = 0; j < figures[i].length; j++) {
+				figures[i][j] = null;
+			}
+		}
+	}
+
+	private void fillLineups() {
+		lineups.put(Enemy.DARK, new Vector<Figure>());
+		for (Figure figure : pile[Enemy.DARK.index()]) {
+			lineups.get(Enemy.DARK).add(figure);
+		}
+
+		lineups.put(Enemy.LIGHT, new Vector<Figure>());
+		for (Figure figure : pile[Enemy.LIGHT.index()]) {
+			lineups.get(Enemy.LIGHT).add(figure);
 		}
 	}
 
@@ -954,5 +955,13 @@ public class Board {
 		}
 
 		return new Object[] { enemy, 0 };
+	}
+
+	public void reset() {
+		clearAura();
+		clearFigures();
+		fillLineups();
+		state = State.PLACING;
+		turn = 0;
 	}
 }

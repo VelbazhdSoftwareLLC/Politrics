@@ -3,7 +3,7 @@
 
     <string name="app_name">Politrics</string>
     <string name="title_activity_game">Politrics</string>
-    <string name="new_game_option">New Game</string>
+    <string name="new_game_option">New</string>
     <string name="help_option">Help</string>
     <string name="about_option">About</string>
     <string name="title_activity_about">About</string>

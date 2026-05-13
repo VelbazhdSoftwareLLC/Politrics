@@ -469,19 +469,17 @@ public class GameActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.new_game:
+		int id = item.getItemId();
+
+		if (id == R.id.new_game) {
 			board.reset();
 			winner[0] = null;
-			winner[1] = new Integer(0);
+			winner[1] = 0;
 			updateViews();
-			break;
-		case R.id.help_game:
+		} else if (id == R.id.help_game) {
 			startActivity(new Intent(GameActivity.this, HelpActivity.class));
-			break;
-		case R.id.about_game:
+		} else if (id == R.id.about_game) {
 			startActivity(new Intent(GameActivity.this, AboutActivity.class));
-			break;
 		}
 
 		return true;

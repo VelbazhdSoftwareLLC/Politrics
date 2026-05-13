@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eu.veldsoft.politrics"
-    android:versionCode="2"
-    android:versionName="1.0.1" >
-
-    <uses-sdk
-        android:minSdkVersion="25"
-        android:targetSdkVersion="33" />
+    package="eu.veldsoft.politrics" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -32,7 +26,8 @@
         <activity
             android:name=".SplashActivity"
             android:label="@string/title_activity_splash"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:exported="true" >
             <meta-data
                 android:name="timeout"
                 android:value="5000" />

@@ -1,0 +1,23 @@
+Politrics is an exciting board game inspired by Chess, designed for strategic minds who enjoy deep tactical gameplay.
+
+**Game Objective:**
+Win by scoring 100 points, the maximum on a single board. Accumulate points across multiple boards to claim victory.
+
+**Ways to Win:**
+1. **Line Formation:** Get 5 figures in a line (horizontal, vertical, or diagonal) that are safe from your opponent.
+2. **Beat the President:** Capture your opponent's President and score based on your highest value combination.
+3. **Incapacitate Opponent:** Leave your opponent with insufficient figures to form a line of 5.
+
+**Board Layout:**
+- 81 squares in a 9x9 grid
+- Inner 7x7 playing field
+- Scoring squares in blue shades (1-6 points)
+- Retirement squares in red shades
+
+**Figures:**
+Two sets of 17 figures each (dark and light), each with unique movement and capture rules.
+
+**Scoring System:**
+Strategic placement on scoring squares earns points. The center square acts as a multiplier for enhanced scoring.
+
+Dive into Politrics and master the art of strategic board gaming!
